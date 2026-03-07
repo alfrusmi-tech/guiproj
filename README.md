@@ -1,5 +1,42 @@
-# Vue 3 + TypeScript + Vite
+# E-commerce Dashboard
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A Vue.js 3 application built with TypeScript and Vite, featuring a product listing store front and an admin dashboard.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Features
+
+- Product listing with search functionality
+- Product detail pages
+- Dashboard with product statistics
+- Responsive design using Tailwind CSS
+- Vue Router for navigation
+
+## Tech Stack
+
+- Vue 3 with Composition API
+- TypeScript
+- Vite
+- Vue Router
+- Tailwind CSS
+- DummyJSON API for product data
+
+## Getting Started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Project Structure
+
+- `src/views/` - Page components (ProductList, ProductDetail, Dashboard)
+- `src/components/` - Reusable components (NavBar, ProductCard)
+- `src/services/` - API services
+- `src/types/` - TypeScript interfaces
+- `src/router/` - Vue Router configuration
