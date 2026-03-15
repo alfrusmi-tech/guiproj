@@ -83,8 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue"
-import { useNavBar } from "../composables/useNavBar"
+import { ref, computed } from "vue"
 
 const props = defineProps<{ search?: string }>()
 const emit = defineEmits<{ (e: "update:search", value: string): void }>()
@@ -93,7 +92,15 @@ const searchModel = computed({
   set: (value: string) => emit("update:search", value),
 })
 
-const { isOpen, toggleMenu, closeMenu } = useNavBar()
+const isOpen = ref(false)
+
+function toggleMenu() {
+  isOpen.value = !isOpen.value
+}
+
+function closeMenu() {
+  isOpen.value = false
+}
 </script>
 
 <style scoped>
