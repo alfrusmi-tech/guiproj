@@ -6,14 +6,11 @@ import { getProduct } from "../services/api"
 import type { Product } from "../types/product"
 
 const route = useRoute()
-
 const product = ref<Product | null>(null)
 
 onMounted(async () => {
-
-const id = Number(route.params.id)
-product.value = await getProduct(id)
-
+  const id = Number(route.params.id)
+  product.value = await getProduct(id)
 })
 
 </script>
@@ -22,22 +19,10 @@ product.value = await getProduct(id)
 
 <div v-if="product" class="p-4">
 
-<img
-:src="product.thumbnail"
-class="w-64"
-/>
-
-<h1 class="text-2xl font-bold">
-{{ product.title }}
-</h1>
-
-<p>
-{{ product.description }}
-</p>
-
-<p class="text-blue-500 font-bold">
-${{ product.price }}
-</p>
+<img :src="product.thumbnail" class="w-64" />
+<h1 class="text-2xl font-bold">{{ product.title }}</h1>
+<p>{{ product.description }}</p>
+<p class="text-blue-500 font-bold">${{ product.price }}</p>
 
 </div>
 
