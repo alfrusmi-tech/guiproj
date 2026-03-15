@@ -11,12 +11,7 @@
         <router-link to="/" class="hover:text-gray-200 transition duration-300">
           Home
         </router-link>
-        <router-link to="/products" class="hover:text-gray-200 transition duration-300">
-          Products
-        </router-link>
-        <router-link to="/categories" class="hover:text-gray-200 transition duration-300">
-          Categories
-        </router-link>
+
         <router-link to="/dashboard" class="hover:text-gray-200 transition duration-300">
           Dashboard
         </router-link>
@@ -59,12 +54,7 @@
         <router-link to="/" @click="closeMenu" class="hover:text-gray-200 transition duration-300 py-2">
           Home
         </router-link>
-        <router-link to="/products" @click="closeMenu" class="hover:text-gray-200 transition duration-300 py-2">
-          Products
-        </router-link>
-        <router-link to="/categories" @click="closeMenu" class="hover:text-gray-200 transition duration-300 py-2">
-          Categories
-        </router-link>
+
         <router-link to="/dashboard" @click="closeMenu" class="hover:text-gray-200 transition duration-300 py-2">
           Dashboard
         </router-link>
@@ -93,30 +83,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from "vue"
+import { useNavBar } from "../composables/useNavBar"
 
 const props = defineProps<{ search?: string }>()
-const emit = defineEmits<{ (e: 'update:search', value: string): void }>()
-
+const emit = defineEmits<{ (e: "update:search", value: string): void }>()
 const searchModel = computed({
   get: () => props.search ?? "",
-  set: (value: string) => emit('update:search', value),
+  set: (value: string) => emit("update:search", value),
 })
 
-const isOpen = ref(false)
-
-const toggleMenu = () => {
-  isOpen.value = !isOpen.value
-}
-
-const closeMenu = () => {
-  isOpen.value = false
-}
+const { isOpen, toggleMenu, closeMenu } = useNavBar()
 </script>
 
 <style scoped>
-/* Additional custom styles if needed, but Tailwind handles most */
 nav {
   font-family: 'Arial', sans-serif;
+}
+
+.router-link-active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.5rem;
 }
 </style>
