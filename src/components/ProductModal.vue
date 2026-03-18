@@ -53,7 +53,7 @@ watch(() => props.isOpen, (isOpen) => {
             >
               ×
             </button>
-
+            
             <!-- Product details -->
             <img :src="product.thumbnail" class="w-full h-48 object-cover rounded" />
             <h2 class="text-2xl font-bold">{{ product.title }}</h2>

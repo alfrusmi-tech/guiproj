@@ -8,11 +8,13 @@ const routes = [
 
 {
 path: "/",
+name: "home",
 component: ProductList
 },
 
 {
 path: "/product/:id",
+ name: "product",
 component: ProductDetail
 },
 

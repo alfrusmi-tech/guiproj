@@ -25,5 +25,11 @@ onMounted(async () => {
 <p class="text-blue-500 font-bold">${{ product.price }}</p>
 
 </div>
+<button
+  class="mb-4 bg-blue-500 text-white px-4 py-2 rounded"
+  @click="$router.back()"
+>
+  Back
+</button>
 
 </template>
