@@ -39,12 +39,12 @@ const filteredProducts = computed(() =>
       <input
         v-model="search"
         placeholder="Search products..."
-        class="border p-2 w-full rounded"
+        class="border p-2 w-full rounded bg-white text-black dark:bg-gray-800 dark:text-white dark:border-gray-600"
       />
 
       <select
         v-model="selectedCategory"
-        class="border p-2 rounded md:w-64"
+        class="border p-2 rounded md:w-64 bg-white text-black dark:bg-gray-800 dark:text-white dark:border-gray-600"
       >
         <option value="">All Categories</option>
         <option
@@ -57,11 +57,11 @@ const filteredProducts = computed(() =>
       </select>
     </div>
 
-    <div v-if="loading" class="text-center text-lg font-semibold text-blue-600 py-8">
+    <div v-if="loading" class="text-center text-lg font-semibold text-blue-600 dark:text-blue-400 py-8">
       Loading products...
     </div>
 
-    <div v-else-if="filteredProducts.length === 0" class="text-gray-500">
+    <div v-else-if="filteredProducts.length === 0" class="text-gray-500 dark:text-gray-300">
       No products found.
     </div>
 

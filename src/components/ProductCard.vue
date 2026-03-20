@@ -18,25 +18,22 @@ router.push(`/product/${props.product.id}`)
 </script>
 
 <template>
+  <div
+    @click="openDetail"
+    class="border rounded p-4 shadow hover:shadow-xl cursor-pointer transition bg-white text-black dark:bg-gray-800 dark:text-white dark:border-gray-700"
+  >
+    <img
+      :src="product.thumbnail"
+      class="w-full h-40 object-cover"
+      alt="product image"
+    />
 
-<div
-@click="openDetail"
-class="border rounded p-4 shadow hover:shadow-xl cursor-pointer transition"
->
+    <h2 class="font-bold mt-2">
+      {{ product.title }}
+    </h2>
 
-<img
-:src="product.thumbnail"
-class="w-full h-40 object-cover"
-/>
-
-<h2 class="font-bold mt-2">
-{{ product.title }}
-</h2>
-
-<p class="text-blue-500 font-semibold">
-${{ product.price }}
-</p>
-
-</div>
-
+    <p class="text-blue-500 dark:text-blue-400 font-semibold">
+      ${{ product.price }}
+    </p>
+  </div>
 </template>

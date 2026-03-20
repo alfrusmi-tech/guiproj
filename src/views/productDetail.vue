@@ -19,26 +19,23 @@ product.value = await getProduct(id)
 </script>
 
 <template>
+  <div v-if="product" class="p-4">
+    <img
+      :src="product.thumbnail"
+      class="w-64 mb-4"
+      alt="product image"
+    />
 
-<div v-if="product" class="p-4">
+    <h1 class="text-2xl font-bold">
+      {{ product.title }}
+    </h1>
 
-<img
-:src="product.thumbnail"
-class="w-64"
-/>
+    <p class="mt-2 text-gray-700 dark:text-gray-300">
+      {{ product.description }}
+    </p>
 
-<h1 class="text-2xl font-bold">
-{{ product.title }}
-</h1>
-
-<p>
-{{ product.description }}
-</p>
-
-<p class="text-blue-500 font-bold">
-${{ product.price }}
-</p>
-
-</div>
-
+    <p class="text-blue-500 dark:text-blue-400 font-bold mt-2">
+      ${{ product.price }}
+    </p>
+  </div>
 </template>
