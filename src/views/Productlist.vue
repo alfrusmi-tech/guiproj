@@ -8,10 +8,15 @@ const products = ref<Product[]>([])
 const categories = ref<Category[]>([])
 const search = ref("")
 const selectedCategory = ref("")
+const loading = ref(true)
 
 onMounted(async () => {
-  products.value = await getProducts()
-  categories.value = await getCategories()
+  try {
+    products.value = await getProducts()
+    categories.value = await getCategories()
+  } finally {
+    loading.value = false
+  }
 })
 
 const filteredProducts = computed(() =>
@@ -42,7 +47,6 @@ const filteredProducts = computed(() =>
         class="border p-2 rounded md:w-64"
       >
         <option value="">All Categories</option>
-
         <option
           v-for="category in categories"
           :key="category.slug"
@@ -53,7 +57,11 @@ const filteredProducts = computed(() =>
       </select>
     </div>
 
-    <div v-if="filteredProducts.length === 0" class="text-gray-500">
+    <div v-if="loading" class="text-center text-lg font-semibold text-blue-600 py-8">
+      Loading products...
+    </div>
+
+    <div v-else-if="filteredProducts.length === 0" class="text-gray-500">
       No products found.
     </div>
 
