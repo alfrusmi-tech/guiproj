@@ -6,6 +6,12 @@ interface ProductsResponse {
   products: Product[]
 }
 
+export interface Category {
+  slug: string
+  name: string
+  url: string
+}
+
 export async function getProducts(): Promise<Product[]> {
   const res = await fetch(BASE_URL)
   const data: ProductsResponse = await res.json()
@@ -18,8 +24,8 @@ export async function getProduct(id: number): Promise<Product> {
   return data
 }
 
-export async function getCategories(): Promise<string[]> {
+export async function getCategories(): Promise<Category[]> {
   const res = await fetch(`${BASE_URL}/categories`)
-  const data: string[] = await res.json()
+  const data: Category[] = await res.json()
   return data
 }

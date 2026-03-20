@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue"
-import { getProducts, getCategories } from "../services/api"
+import { getProducts, getCategories, type Category } from "../services/api"
 import type { Product } from "../types/product"
 import ProductCard from "../components/ProductCard.vue"
 
 const products = ref<Product[]>([])
-const categories = ref<string[]>([])
+const categories = ref<Category[]>([])
 const search = ref("")
 const selectedCategory = ref("")
 
@@ -42,12 +42,13 @@ const filteredProducts = computed(() =>
         class="border p-2 rounded md:w-64"
       >
         <option value="">All Categories</option>
+
         <option
           v-for="category in categories"
-          :key="category"
-          :value="category"
+          :key="category.slug"
+          :value="category.slug"
         >
-          {{ category }}
+          {{ category.name }}
         </option>
       </select>
     </div>
