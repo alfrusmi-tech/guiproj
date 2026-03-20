@@ -3,7 +3,8 @@ import { ref, onMounted, computed } from "vue"
 import { getProducts, getCategories, type Category } from "../services/api"
 import type { Product } from "../types/product"
 import ProductCard from "../components/ProductCard.vue"
-
+import { inject, type Ref } from "vue"
+const isDark = inject<Ref<boolean>>("isDark")!
 const products = ref<Product[]>([])
 const categories = ref<Category[]>([])
 const search = ref("")
@@ -37,15 +38,22 @@ const filteredProducts = computed(() =>
   <div class="p-4">
     <div class="flex flex-col md:flex-row gap-4 mb-4">
       <input
-        v-model="search"
-        placeholder="Search products..."
-        class="border p-2 w-full rounded bg-white text-black dark:bg-gray-800 dark:text-white dark:border-gray-600"
-      />
+  v-model="search"
+  placeholder="Search products..."
+  :class="[
+    'border p-2 w-full rounded',
+    isDark ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-black'
+  ]"
+/>
+
 
       <select
-        v-model="selectedCategory"
-        class="border p-2 rounded md:w-64 bg-white text-black dark:bg-gray-800 dark:text-white dark:border-gray-600"
-      >
+  v-model="selectedCategory"
+  :class="[
+    'border p-2 rounded md:w-64',
+    isDark ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-black'
+  ]"
+>
         <option value="">All Categories</option>
         <option
           v-for="category in categories"
