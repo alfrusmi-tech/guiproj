@@ -2,18 +2,24 @@ import type { Product } from "../types/product"
 
 const BASE_URL = "https://dummyjson.com/products"
 
+interface ProductsResponse {
+  products: Product[]
+}
+
 export async function getProducts(): Promise<Product[]> {
-
   const res = await fetch(BASE_URL)
-  const data = await res.json()
-
+  const data: ProductsResponse = await res.json()
   return data.products
-
 }
 
 export async function getProduct(id: number): Promise<Product> {
-
   const res = await fetch(`${BASE_URL}/${id}`)
-  return await res.json()
+  const data: Product = await res.json()
+  return data
+}
 
+export async function getCategories(): Promise<string[]> {
+  const res = await fetch(`${BASE_URL}/categories`)
+  const data: string[] = await res.json()
+  return data
 }

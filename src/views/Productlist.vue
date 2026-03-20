@@ -1,49 +1,67 @@
 <script setup lang="ts">
-
 import { ref, onMounted, computed } from "vue"
-import { getProducts } from "../services/api"
+import { getProducts, getCategories } from "../services/api"
 import type { Product } from "../types/product"
 import ProductCard from "../components/ProductCard.vue"
 
 const products = ref<Product[]>([])
+const categories = ref<string[]>([])
 const search = ref("")
+const selectedCategory = ref("")
 
 onMounted(async () => {
-
-products.value = await getProducts()
-
+  products.value = await getProducts()
+  categories.value = await getCategories()
 })
 
 const filteredProducts = computed(() =>
+  products.value.filter((p) => {
+    const matchesSearch = p.title
+      .toLowerCase()
+      .includes(search.value.toLowerCase())
 
-products.value.filter(p =>
-p.title.toLowerCase().includes(search.value.toLowerCase())
+    const matchesCategory =
+      selectedCategory.value === "" || p.category === selectedCategory.value
+
+    return matchesSearch && matchesCategory
+  })
 )
-
-)
-
 </script>
 
 <template>
+  <div class="p-4">
+    <div class="flex flex-col md:flex-row gap-4 mb-4">
+      <input
+        v-model="search"
+        placeholder="Search products..."
+        class="border p-2 w-full rounded"
+      />
 
-<div class="p-4">
+      <select
+        v-model="selectedCategory"
+        class="border p-2 rounded md:w-64"
+      >
+        <option value="">All Categories</option>
+        <option
+          v-for="category in categories"
+          :key="category"
+          :value="category"
+        >
+          {{ category }}
+        </option>
+      </select>
+    </div>
 
-<input
-v-model="search"
-placeholder="Search products..."
-class="border p-2 mb-4 w-full"
-/>
+    <div v-if="filteredProducts.length === 0" class="text-gray-500">
+      No products found.
+    </div>
 
-<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-<ProductCard
-v-for="product in filteredProducts"
-:key="product.id"
-:product="product"
-/>
-
-</div>
-
-</div>
-
+    <div v-else class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <ProductCard
+        v-for="product in filteredProducts"
+        :key="product.id"
+        :product="product"
+      />
+    </div>
+  </div>
 </template>

@@ -13,8 +13,9 @@ onMounted(async () => {
 const totalProducts = computed(() => products.value.length)
 const totalValue = computed(() => products.value.reduce((sum, p) => sum + p.price, 0))
 const categories = computed(() => [...new Set(products.value.map(p => p.category))])
-const avgPrice = computed(() => totalValue.value / totalProducts.value)
-
+const avgPrice = computed(() =>
+  totalProducts.value > 0 ? totalValue.value / totalProducts.value : 0
+)
 </script>
 
 <template>
