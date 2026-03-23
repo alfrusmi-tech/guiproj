@@ -3,6 +3,7 @@ import { ref, onMounted, computed, inject, type Ref } from "vue"
 import { getProducts, getCategories, type Category } from "../services/api"
 import type { Product } from "../types/product"
 import ProductCard from "../components/ProductCard.vue"
+import ProductModal from "../components/ProductModal.vue"
 
 const isDark = inject<Ref<boolean>>("isDark")!
 
@@ -11,6 +12,9 @@ const categories = ref<Category[]>([])
 const search = ref("")
 const selectedCategory = ref("")
 const loading = ref(true)
+
+const selectedProduct = ref<Product | null>(null)
+const showModal = ref(false)
 
 onMounted(async () => {
   try {
@@ -33,6 +37,18 @@ const filteredProducts = computed(() =>
     return matchesSearch && matchesCategory
   })
 )
+
+function openModal(product: Product) {
+  selectedProduct.value = product
+  showModal.value = true
+}
+
+function closeModal() {
+  showModal.value = false
+  setTimeout(() => {
+    selectedProduct.value = null
+  }, 250)
+}
 </script>
 
 <template>
@@ -78,7 +94,14 @@ const filteredProducts = computed(() =>
         v-for="product in filteredProducts"
         :key="product.id"
         :product="product"
+        @open="openModal"
       />
     </div>
+
+    <ProductModal
+      :show="showModal"
+      :product="selectedProduct"
+      @close="closeModal"
+    />
   </div>
 </template>

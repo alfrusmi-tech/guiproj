@@ -1,107 +1,112 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, inject, type Ref } from "vue"
-import { getProducts, getCategories, type Category } from "../services/api"
 import type { Product } from "../types/product"
-import ProductCard from "../components/ProductCard.vue"
-import ProductModal from "../components/ProductModal.vue"
+import { useCartStore } from "../stores/cart"
+import { inject, type Ref } from "vue"
 
 const isDark = inject<Ref<boolean>>("isDark")!
+const cartStore = useCartStore()
 
-const products = ref<Product[]>([])
-const categories = ref<Category[]>([])
-const search = ref("")
-const selectedCategory = ref("")
-const loading = ref(true)
+const props = defineProps<{
+  product: Product | null
+  show: boolean
+}>()
 
-const selectedProduct = ref<Product | null>(null)
-const showModal = ref(false)
+const emit = defineEmits<{
+  (e: "close"): void
+}>()
 
-onMounted(async () => {
-  try {
-    products.value = await getProducts()
-    categories.value = await getCategories()
-  } finally {
-    loading.value = false
+function addToCart() {
+  if (props.product) {
+    cartStore.addToCart(props.product)
   }
-})
-
-const filteredProducts = computed(() =>
-  products.value.filter((p) => {
-    const matchesSearch = p.title
-      .toLowerCase()
-      .includes(search.value.toLowerCase())
-
-    const matchesCategory =
-      selectedCategory.value === "" || p.category === selectedCategory.value
-
-    return matchesSearch && matchesCategory
-  })
-)
-
-function openModal(product: Product) {
-  selectedProduct.value = product
-  showModal.value = true
-}
-
-function closeModal() {
-  showModal.value = false
-  setTimeout(() => {
-    selectedProduct.value = null
-  }, 250)
 }
 </script>
 
 <template>
-  <div class="p-4">
-    <div class="flex flex-col md:flex-row gap-4 mb-4">
-      <input
-        v-model="search"
-        placeholder="Search products..."
-        :class="[
-          'border p-2 w-full rounded',
-          isDark ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-black'
-        ]"
-      />
-
-      <select
-        v-model="selectedCategory"
-        :class="[
-          'border p-2 rounded md:w-64',
-          isDark ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-black'
-        ]"
-      >
-        <option value="">All Categories</option>
-        <option
-          v-for="category in categories"
-          :key="category.slug"
-          :value="category.slug"
+  <transition name="fade">
+    <div
+      v-if="show && product"
+      class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4"
+      @click.self="emit('close')"
+    >
+      <transition name="scale">
+        <div
+          v-if="show && product"
+          :class="[
+            'w-full max-w-2xl rounded-xl shadow-2xl p-6 relative',
+            isDark ? 'bg-gray-900 text-white' : 'bg-white text-black'
+          ]"
         >
-          {{ category.name }}
-        </option>
-      </select>
-    </div>
+          <button
+            @click="emit('close')"
+            class="absolute top-3 right-3 text-2xl font-bold hover:text-red-500"
+          >
+            ×
+          </button>
 
-    <div v-if="loading" class="text-center text-lg font-semibold text-blue-600 py-8">
-      Loading products...
-    </div>
+          <div class="grid md:grid-cols-2 gap-6 items-start">
+            <img
+              :src="product.thumbnail"
+              :alt="product.title"
+              class="w-full h-72 object-cover rounded-lg"
+            />
 
-    <div v-else-if="filteredProducts.length === 0" class="text-gray-500">
-      No products found.
-    </div>
+            <div>
+              <h2 class="text-2xl font-bold mb-3">
+                {{ product.title }}
+              </h2>
 
-    <div v-else class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <ProductCard
-        v-for="product in filteredProducts"
-        :key="product.id"
-        :product="product"
-        @open="openModal"
-      />
-    </div>
+              <p :class="isDark ? 'text-gray-300 mb-4' : 'text-gray-700 mb-4'">
+                {{ product.description }}
+              </p>
 
-    <ProductModal
-      :show="showModal"
-      :product="selectedProduct"
-      @close="closeModal"
-    />
-  </div>
+              <p class="text-blue-500 text-xl font-semibold mb-2">
+                ${{ product.price }}
+              </p>
+
+              <p class="mb-2">
+                <span class="font-semibold">Category:</span>
+                {{ product.category }}
+              </p>
+
+              <p class="mb-4">
+                <span class="font-semibold">Brand:</span>
+                {{ product.brand }}
+              </p>
+
+              <button
+                @click="addToCart"
+                class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg transition"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+  </transition>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.25s ease;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+</style>
