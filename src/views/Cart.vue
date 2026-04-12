@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { useCartStore } from '../stores/cart'
+import { convertToLKR } from '../utils/currency'
+import { computed } from 'vue'
+
 const cartStore = useCartStore()
+
+const totalPriceLKR = computed(() => {
+  const totalUSD = cartStore.totalPrice
+  return convertToLKR(totalUSD)
+})
 </script>
 
 <template>
@@ -19,7 +27,7 @@ const cartStore = useCartStore()
       >
         <div>
           <h2 class="font-bold">{{ item.title }}</h2>
-          <p class="text-blue-500 dark:text-blue-400 font-semibold">${{ item.price }}</p>
+          <p class="text-blue-500 dark:text-blue-400 font-semibold">{{ convertToLKR(item.price) }}</p>
         </div>
 
         <button
@@ -31,7 +39,7 @@ const cartStore = useCartStore()
       </div>
 
       <div class="text-right font-bold text-lg mt-2">
-        Total: ${{ cartStore.totalPrice.toFixed(2) }}
+        Total: {{ totalPriceLKR }}
       </div>
 
       <button

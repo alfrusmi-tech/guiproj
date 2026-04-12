@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject, type Ref } from "vue"
 import type { Product } from "../types/product"
+import { convertToLKR } from "../utils/currency"
 
 const isDark = inject<Ref<boolean>>("isDark")!
 
@@ -32,7 +33,7 @@ const emit = defineEmits<{
     </h2>
 
     <p class="text-blue-500 font-semibold">
-      ${{ product.price }}
+      {{ convertToLKR(product.price) }}
     </p>
   </div>
 </template>

@@ -2,6 +2,7 @@
 import type { Product } from "../types/product"
 import { useCartStore } from "../stores/cart"
 import { inject, type Ref } from "vue"
+import { convertToLKR } from "../utils/currency"
 
 const isDark = inject<Ref<boolean>>("isDark")!
 const cartStore = useCartStore()
@@ -61,7 +62,7 @@ function addToCart() {
               </p>
 
               <p class="text-blue-500 text-xl font-semibold mb-2">
-                ${{ product.price }}
+                {{ convertToLKR(product.price) }}
               </p>
 
               <p class="mb-2">

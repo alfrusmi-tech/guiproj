@@ -4,6 +4,7 @@ import { useRoute } from "vue-router"
 import { getProduct } from "../services/api"
 import { useCartStore } from "../stores/cart"
 import type { Product } from "../types/product"
+import { convertToLKR } from "../utils/currency"
 
 const route = useRoute()
 const cartStore = useCartStore()
@@ -40,7 +41,7 @@ function addToCart() {                                  // ← ADD THIS
       {{ product.description }}
     </p>
 
-    <p class="text-blue-500 font-bold text-xl mb-2">${{ product.price }}</p>
+    <p class="text-blue-500 font-bold text-xl mb-2">{{ convertToLKR(product.price) }}</p>
 
     <p class="mb-1"><span class="font-semibold">Category:</span> {{ product.category }}</p>
     <p class="mb-4"><span class="font-semibold">Brand:</span> {{ product.brand }}</p>

@@ -3,6 +3,7 @@
 import { ref, onMounted, computed } from "vue"
 import { getProducts } from "../services/api"
 import type { Product } from "../types/product"
+import { convertToLKR } from "../utils/currency"
 
 const products = ref<Product[]>([])
 
@@ -12,10 +13,12 @@ onMounted(async () => {
 
 const totalProducts = computed(() => products.value.length)
 const totalValue = computed(() => products.value.reduce((sum, p) => sum + p.price, 0))
+const totalValueLKR = computed(() => convertToLKR(totalValue.value))
 const categories = computed(() => [...new Set(products.value.map(p => p.category))])
 const avgPrice = computed(() =>
   totalProducts.value > 0 ? totalValue.value / totalProducts.value : 0
 )
+const avgPriceLKR = computed(() => convertToLKR(avgPrice.value))
 </script>
 
 <template>
@@ -30,7 +33,7 @@ const avgPrice = computed(() =>
 
       <div class="bg-green-100 dark:bg-green-900 p-4 rounded shadow">
         <h2 class="font-bold">Total Value</h2>
-        <p class="text-2xl">${{ totalValue.toFixed(2) }}</p>
+        <p class="text-2xl">{{ totalValueLKR }}</p>
       </div>
 
       <div class="bg-yellow-100 dark:bg-yellow-800 p-4 rounded shadow">
@@ -40,7 +43,7 @@ const avgPrice = computed(() =>
 
       <div class="bg-purple-100 dark:bg-purple-900 p-4 rounded shadow">
         <h2 class="font-bold">Average Price</h2>
-        <p class="text-2xl">${{ avgPrice.toFixed(2) }}</p>
+        <p class="text-2xl">{{ avgPriceLKR }}</p>
       </div>
     </div>
 
