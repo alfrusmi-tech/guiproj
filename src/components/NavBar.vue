@@ -7,11 +7,11 @@
     <div class="flex gap-3 items-center">
 
       <!-- Dark Mode -->
-      <button
+      <button 
         @click="toggleDarkMode"
         :class="isDark
-          ? 'bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600'
-          : 'bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100'"
+          ? 'bg-gray-700 text-white px-2 py-2 rounded hover:bg-gray-600'
+          : 'bg-white text-blue-600 px-2 py-2 rounded hover:bg-gray-100'"
       >
         {{ isDark ? "Light Mode" : "Dark Mode" }}
       </button>
