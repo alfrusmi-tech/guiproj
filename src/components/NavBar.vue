@@ -24,14 +24,7 @@
         Home
       </router-link>
 
-      <!-- Dashboard -->
-      <router-link
-        to="/dashboard"
-        :class="btnClass"
-      >
-        Dashboard
-      </router-link>
-
+      
       <!-- Cart -->
       <router-link
         to="/cart"

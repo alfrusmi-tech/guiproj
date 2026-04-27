@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 
-import ProductList from "../views/Productlist.vue"
+import ProductList from "../views/ProductList.vue"
 import ProductDetail from "../views/productDetail.vue"
-import Dashboard from "../views/Dashboard.vue"
 import Cart from '../views/Cart.vue'
 import Login from "../components/Login.vue"
 
@@ -16,11 +15,6 @@ component: ProductList
 {
 path: "/product/:id",
 component: ProductDetail
-},
-
-{
-path: "/dashboard",
-component: Dashboard
 },
 
 { path: '/cart', component: Cart },
