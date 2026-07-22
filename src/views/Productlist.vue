@@ -63,7 +63,7 @@ function closeModal() {
         ]"
       >
         <div class="flex justify-center mb-4">
-          <img src="/ChatGPT Image Jul 22, 2026, 11_33_03 AM.png" alt="QuickBuy Logo" class="h-20 w-auto" />
+          <img src="C:\GUI_PROJECT\my-project\public\logo 2.png" alt="QuickBuy Logo" class="h-20 w-auto" />
         </div>
         <h1
           :class="[

@@ -8,7 +8,7 @@ const isDark = inject<boolean>("isDark", false)
     <!-- Logo & Tagline -->
     <div class="text-center mb-8">
       <div class="flex items-center justify-center gap-2 mb-3">
-        <img src="/ChatGPT Image Jul 22, 2026, 10_36_35 AM.png" alt="QuickBuy Logo" class="h-10 w-auto" />
+        <img src="C:\GUI_PROJECT\my-project\public\logo 1.png" alt="QuickBuy Logo" class="h-10 w-auto" />
         <span :class="isDark ? 'text-white' : 'text-gray-900'" class="text-2xl font-bold">QuickBuy</span>
       </div>
       <p :class="isDark ? 'text-gray-300' : 'text-gray-600'" class="text-sm max-w-lg mx-auto">

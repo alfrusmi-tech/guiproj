@@ -9,7 +9,7 @@ const isDark = inject<boolean>("isDark", false)
   <nav class="bg-indigo-600 text-white px-6 py-3 flex justify-between items-center">
     <div class="flex items-center gap-2">
       
-      <img src="/ChatGPT Image Jul 22, 2026, 10_36_35 AM.png" alt="QuickBuy Logo" class="h-9 w-auto" />
+      <img src="C:\GUI_PROJECT\my-project\public\logo 1.png" alt="QuickBuy Logo" class="h-9 w-auto" />
       <h1 class="text-xl font-bold">QuickBuy</h1>
     </div>
 
