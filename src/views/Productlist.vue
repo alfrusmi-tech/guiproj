@@ -53,6 +53,39 @@ function closeModal() {
 
 <template>
   <div class="p-4">
+
+    <!-- Hero Section -->
+    <div class="mb-6">
+      <div
+        :class="[
+          'rounded-2xl py-12 text-center',
+          isDark ? 'bg-indigo-900' : 'bg-indigo-200'
+        ]"
+      >
+        <div class="flex justify-center mb-4">
+          <img src="/ChatGPT Image Jul 22, 2026, 11_33_03 AM.png" alt="QuickBuy Logo" class="h-20 w-auto" />
+        </div>
+        <h1
+          :class="[
+            'text-3xl font-bold mb-3',
+            isDark ? 'text-white' : 'text-black'
+          ]"
+        >
+          Welcome to QuickBuy
+        </h1>
+        <p
+          :class="[
+            'text-sm max-w-lg mx-auto leading-relaxed',
+            isDark ? 'text-gray-300' : 'text-gray-700'
+          ]"
+        >
+          Premium quality meets affordability. Explore our handpicked selection of top-rated products
+          across all categories and get them delivered straight to your door
+        </p>
+      </div>
+    </div>
+
+    <!-- Search & Category Filter -->
     <div class="flex flex-col md:flex-row gap-4 mb-4">
       <input
         v-model="search"
@@ -81,14 +114,17 @@ function closeModal() {
       </select>
     </div>
 
+    <!-- Loading State -->
     <div v-if="loading" class="text-center text-lg font-semibold text-blue-600 py-8">
       Loading products...
     </div>
 
+    <!-- No Results -->
     <div v-else-if="filteredProducts.length === 0" class="text-gray-500">
       No products found.
     </div>
 
+    <!-- Product Grid -->
     <div v-else class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <ProductCard
         v-for="product in filteredProducts"
@@ -98,6 +134,7 @@ function closeModal() {
       />
     </div>
 
+    <!-- Product Modal -->
     <ProductModal
       :show="showModal"
       :product="selectedProduct"

@@ -1,97 +1,43 @@
+<script setup lang="ts">
+import { inject } from "vue"
+
+const toggleDarkMode = inject<() => void>("toggleDarkMode")
+const isDark = inject<boolean>("isDark", false)
+</script>
+
 <template>
-  <nav
-    :class="isDark ? 'bg-gray-900 text-white p-4 flex justify-between items-center' : 'bg-blue-600 text-white p-4 flex justify-between items-center'"
-  >
-    <h1 class="text-xl font-bold">QuickBuy</h1>
+  <nav class="bg-indigo-600 text-white px-6 py-3 flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      
+      <img src="/ChatGPT Image Jul 22, 2026, 10_36_35 AM.png" alt="QuickBuy Logo" class="h-9 w-auto" />
+      <h1 class="text-xl font-bold">QuickBuy</h1>
+    </div>
 
-    <div class="flex gap-3 items-center">
-
-      <!-- Dark Mode -->
-      <button 
-        @click="toggleDarkMode"
-        :class="isDark
-          ? 'bg-gray-700 text-white px-2 py-2 rounded hover:bg-gray-600'
-          : 'bg-white text-blue-600 px-2 py-2 rounded hover:bg-gray-100'"
+    <div class="flex items-center gap-3">
+      <button
+        @click="toggleDarkMode?.()"
+        class="border border-white text-white px-5 py-1.5 rounded text-sm hover:bg-indigo-500 transition"
       >
-        {{ isDark ? "Light Mode" : "Dark Mode" }}
+        {{ isDark ? 'Light mode' : 'Dark mode' }}
       </button>
-
-      <!-- Home -->
       <router-link
         to="/"
-        :class="btnClass"
+        class="border border-white text-white px-5 py-1.5 rounded text-sm hover:bg-indigo-500 transition"
       >
         Home
       </router-link>
-
-      
-      <!-- Cart -->
       <router-link
         to="/cart"
-        :class="btnClass"
+        class="border border-white text-white px-5 py-1.5 rounded text-sm hover:bg-indigo-500 transition"
       >
-        Cart ({{ cartStore.totalItems }})
+        Cart
       </router-link>
-
-      <!-- Show username -->
-      <span v-if="isLoggedIn" class="text-sm hidden md:block">
-        Hi, {{ user?.firstName }}
-      </span>
-
-      <!-- Login / Logout -->
       <router-link
-        v-if="!isLoggedIn"
         to="/login"
-        :class="btnClass"
+        class="border border-white text-white px-5 py-1.5 rounded text-sm hover:bg-indigo-500 transition"
       >
         Login
       </router-link>
-
-      <button
-        v-else
-        @click="logout"
-        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-      >
-        Logout
-      </button>
-
     </div>
   </nav>
 </template>
-
-<script setup lang="ts">
-import { inject, type Ref, ref, onMounted } from "vue"
-import { useCartStore } from "../stores/cart"
-
-const isDark = inject<Ref<boolean>>("isDark")!
-const toggleDarkMode = inject<() => void>("toggleDarkMode")!
-const cartStore = useCartStore()
-
-// login state
-const isLoggedIn = ref(false)
-const user = ref<any>(null)
-
-// reusable class
-const btnClass = isDark.value
-  ? 'bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600'
-  : 'bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100'
-
-// check login on load
-onMounted(() => {
-  const token = localStorage.getItem("token")
-  const storedUser = localStorage.getItem("user")
-
-  if (token && storedUser) {
-    isLoggedIn.value = true
-    user.value = JSON.parse(storedUser)
-  }
-})
-
-// logout function
-function logout() {
-  localStorage.removeItem("token")
-  localStorage.removeItem("user")
-  isLoggedIn.value = false
-  user.value = null
-}
-</script>

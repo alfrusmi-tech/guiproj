@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, provide } from "vue"
 import NavBar from "./components/NavBar.vue"
+import Footer from "./components/Footer.vue"
 
 const isDark = ref(false)
 
@@ -24,5 +25,6 @@ provide("toggleDarkMode", toggleDarkMode)
   >
     <NavBar />
     <router-view />
+    <Footer />
   </div>
 </template>
