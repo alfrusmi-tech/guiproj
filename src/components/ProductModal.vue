@@ -77,7 +77,7 @@ function addToCart() {
 
               <button
                 @click="addToCart"
-                class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg transition"
+                class="w-full bg-blue-500 hover:bg-green-600 text-white py-3 rounded-lg transition"
               >
                 + Add to Cart
               </button>
