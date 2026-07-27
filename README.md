@@ -32,6 +32,19 @@ A Vue.js 3 application built with TypeScript and Vite, featuring a product listi
    ```
 
 3. Open [http://localhost:5173](http://localhost:5173) in your browser.
+4.# QuickBuy
+
+## GitHub Repository
+
+https://github.com/alfrusmi-tech/guiproj.git
+
+## Technologies
+
+- Vue 3
+- TypeScript
+- Tailwind CSS
+- Vite
+- Pinia
 
 ## Project Structure
 
